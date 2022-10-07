@@ -1,6 +1,8 @@
-export interface Robot{
-    robotId: string
-    batteryLevel: number
-    y : number
-    x : number
+export interface Robot {
+    robotData: {
+        robotId: string
+        batteryLevel: number
+        y : number
+        x : number
+    }[];
 }
