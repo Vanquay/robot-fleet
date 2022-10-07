@@ -1,5 +1,5 @@
-import { Divider, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
-import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
+import Head from 'next/head'
 import TableComponent from '../components/robot-table'
 import { Robot } from '../models/Robot'
 import GetRobotList from './api/get-robot-list'
@@ -13,9 +13,16 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-const Home: NextPage = ({robotData}: Robot) => {
+const Home = ({robotData}: Robot) => {
   return(
-    <TableComponent robotData={robotData} />
+    <div>
+      <Head>
+        <title>Robot List Warehouse</title>
+      </Head>
+      <main>
+        <TableComponent robotData={robotData} />
+      </main>
+    </div>
   )
 }
 
