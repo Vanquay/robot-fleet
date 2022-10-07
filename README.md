@@ -3,6 +3,7 @@
 First, run the development server:
 
 ```bash
+cd robot-fleet
 npm run dev
 ```
 
