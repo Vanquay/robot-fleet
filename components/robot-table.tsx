@@ -1,33 +1,22 @@
-import { Input, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react"
-import { useEffect, useState } from "react";
+import { Button, Input, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react"
+import { useEffect, useMemo, useState } from "react";
 import { Robot } from "../models/Robot"
+import filter from "../utils/filter";
+import useSortableData from "../utils/sort-table";
 
-const filter = () => {
-    var tr, td, searchValue, i;
-    var input = document.getElementById("filter")
-    var filter = input.value.toUpperCase()
-    var table = document.getElementById("robotTable")
-    tr = table.getElementsByTagName("tr")
 
-    //Loop through rows to find ID
-    for (i = 0; i < tr.length; i++){
-        td = tr[i].getElementsByTagName("td")[0]
-        if(td){
-            searchValue = td.textContent || td.innerText;
-            if(searchValue.toUpperCase().indexOf(filter) > -1){
-                tr[i].style.display = ""
-            }
-            else{
-                tr[i].style.display = "none"
-            }
-        }
-        
-    }
-}
 
 const TableComponent = ({robotData} : Robot) => {
-    const [search, setSearch] = useState("")
-    useEffect(() => setSearch("Search for RobotId"),[])
+    const [search, setSearch] = useState("");
+    useEffect(() => setSearch("Search for RobotId"),[]);
+
+    const { robotDataItems, requestSort, sortConfig } = useSortableData(robotData);
+    const getClassNamesFor = (name: any) => {
+      if (!sortConfig) {
+        return;
+      }
+      return sortConfig.key === name ? sortConfig.direction : undefined;
+    };
     return(
         <div><Input type ="text" id="filter" onKeyUp={filter} size="lg" placeholder={search} />
             <TableContainer>
@@ -35,14 +24,15 @@ const TableComponent = ({robotData} : Robot) => {
                     <TableCaption placement="top" fontSize={34}>Robot List in warehouse</TableCaption>
                     <Thead>
                      <Tr>
-                        <Th>Robot Id</Th>
-                        <Th isNumeric>Battery Level</Th>
-                        <Th isNumeric>Y coordinate</Th>
-                        <Th isNumeric>X coordinate</Th>
+                        {/* <Th><Button type="button" onClick={() => requestSort("robotId")}>Robot Id</Th></Button> */}
+                        <Th><Button type ="button" onClick={() => requestSort("robotId")} className={getClassNamesFor("robotId")}>Robot ID</Button></Th>
+                        <Th isNumeric><Button type ="button" onClick={() => requestSort("batteryLevel")} className={getClassNamesFor("batteryLevel")}>Battery Level</Button></Th>
+                        <Th isNumeric><Button type ="button" onClick={() => requestSort("y")} className={getClassNamesFor("y")}>Y coordinate</Button></Th>
+                        <Th isNumeric><Button type ="button" onClick={() => requestSort("x")} className={getClassNamesFor("x")}>X coordinate</Button></Th>
                     </Tr>
                     </Thead>
                     <Tbody >
-                    {robotData.map((robot, robotIndex) => (
+                    {robotDataItems.map((robot, robotIndex) => (
                         <Tr key={robotIndex}>
                             <Td>{robot.robotId}</Td>
                             <Td isNumeric>{robot.batteryLevel}</Td>
@@ -54,7 +44,6 @@ const TableComponent = ({robotData} : Robot) => {
                 </Table>
             </TableContainer>
         </div>
-
     )
 }
 

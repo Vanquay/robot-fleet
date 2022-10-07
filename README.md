@@ -4,8 +4,6 @@ First, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -17,3 +15,4 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 - Let users pick how many robots rows to display in one page by using an array Splice. 
 - Make UI more user engaging by adding images such as battery icon by adding css and img tags. 
 - GeoLocation that tracks how close a user is to selected robot. 
+- Filter by coordinates and battery level using same filter function util. 
