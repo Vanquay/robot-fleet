@@ -2,10 +2,10 @@
 
 const filter = () => {
     var tr, td, searchValue, i;
-    var input = document.getElementById("filter");
+    var input = document.getElementById("filter") as HTMLInputElement;
     var filter = input.value.toUpperCase();
     var table = document.getElementById("robotTable");
-    tr = table.getElementsByTagName("tr");
+    tr = table!.getElementsByTagName("tr");
 
     //Loop through rows to find ID
     for (i = 0; i < tr.length; i++){
